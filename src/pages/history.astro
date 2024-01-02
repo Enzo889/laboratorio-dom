@@ -1,0 +1,159 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Mi historia con el DOM">
+  <div class="font-[Chillax] text-white rounded-lg shadow-lg mx-28">
+    <article>
+      <header>
+        <h1
+          class="text-7xl font-bold hola h-screen flex text-center items-center uppercase opacity-40"
+        >
+          ¡Bienvenido a la Tierra de Códigos Encantados, viajero intrépido!
+        </h1>
+        <br />
+        <div id="body">
+          <p
+            class="text-4xl h-screen flex text-center items-center"
+            id="parrafo-1"
+          >
+            Te agradezco de corazón por aventurarte en esta página mágica, donde
+            los bits y bytes danzan al ritmo de hechizos y encantamientos. En
+            este reino digital, donde las opciones son tan vastas como las
+            estrellas en el cielo, tu elección de dedicar un fragmento de tu
+            tiempo a nuestro encantador rincón es un regalo que aprecio
+            enormemente.
+          </p>
+          <p
+            class="text-4xl h-screen flex text-center items-center"
+            id="parrafo-2"
+          >
+            En mi travesía a través del Mundo del DOM, he recordado las
+            enseñanzas de antiguos y contemporáneos magos de las palabras,
+            exploradores de la fantasía absurda y maestros en la comprensión del
+            absurdo de la existencia humana. Autores como Juvenal Acosta, Rafael
+            Pérez Estrada, Gabriel García Márquez y David Roas han dejado
+            huellas mágicas en mi mente, guiando mi viaje mientras enfrento los
+            desafíos del DOM, un laberinto encantado donde cada línea de código
+            es un conjuro por descifrar.
+          </p>
+
+          <p
+            class="text-4xl h-screen flex text-center items-center"
+            id="parrafo-3"
+          >
+            Al principio, el DOM se alzaba como un bosque encantado, susurros de
+            nodos y elementos flotaban en el aire como hechizos indescifrables.
+            Sin embargo, con valentía y determinación, cada línea de código se
+            convirtió en un fragmento de un cuento de hadas digital. Aprendí a
+            tejer delicadamente el DOM, como si estuviera conjurando una tela de
+            araña que conecta los hilos mágicos de la realidad virtual.
+          </p>
+
+          <p
+            class="text-4xl h-screen flex text-center items-center"
+            id="parrafo-4"
+          >
+            Mi travesía a través del DOM se ha convertido en una epopeya, una
+            metáfora de la eterna lucha humana por encontrar significado en un
+            mundo lleno de maravillas y misterios. Cada clic, cada interacción y
+            cada desafío que enfrento aquí son como capítulos emocionantes en un
+            libro encantado que estamos escribiendo juntos.
+          </p>
+          <p
+            class="text-4xl h-screen flex text-center items-center"
+            id="parrafo-5"
+          >
+            Agradezco tu presencia en este laboratorio de ideas, donde la magia
+            de la creatividad y la alquimia del desarrollo web se entrelazan. Tu
+            compromiso y entusiasmo son los ingredientes mágicos que impulsan
+            nuestras investigaciones y mejoras constantes. Que esta plataforma
+            te sirva de varita mágica, inspirándote, ayudándote a dar forma a
+            tus ideas y permitiéndote explorar el potencial ilimitado de este
+            reino digital.
+          </p>
+        </div>
+      </header>
+    </article>
+
+    <!-- Contenido del cuento -->
+
+    <footer class="text-2xl h-96 flex flex-col text-center items-center">
+      <p class="text-gray-400">Con gratitud y emoción,</p>
+      <p class="text-white font-bold">Enzo Bustamante, el Mago del DOM</p>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const parrafos = [];
+  for (let i = 1; i <= 5; i++) {
+    parrafos.push(document.getElementById("parrafo-" + i));
+  }
+
+  gsap.to(".hola", {
+    duration: 4.5,
+    opacity: 1,
+    ease: "power4",
+    y: "0",
+  });
+
+  function animateText(text) {
+    let originalText = text.textContent;
+    let currentText = "";
+    let index = 0;
+
+    const reveal = setInterval(() => {
+      if (index < originalText.length) {
+        currentText += originalText[index];
+        text.textContent = currentText;
+        index++;
+      } else {
+        clearInterval(reveal);
+      }
+    }, 75);
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  parrafos.forEach((parrafo) => {
+    ScrollTrigger.create({
+      trigger: parrafo,
+      start: "top 100%",
+      onEnter: () => animateText(parrafo),
+      once: true,
+      scrub: 2,
+      toggleActions: "play pause play pause",
+    });
+  });
+</script>
+
+<style>
+  h1 {
+    background: linear-gradient(
+      to right,
+      #7953cd 20%,
+      #00affa 30%,
+      #0190cd 70%,
+      #764ada 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    background-size: 500% auto;
+    animation: changeGradient 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes changeGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+</style>

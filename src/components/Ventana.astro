@@ -1,0 +1,110 @@
+<main id="ventana" class="flex justify-center content-center mt-56 text-white">
+  <div id="divmove" class="bg-[rgba(255,255,255,.08)] rounded-3xl">
+    <div id="header" class="flex justify-between p-2 bg-sky-600 rounded-t-3xl">
+      <p>Error 404</p>
+      <a class="bg-red-600 border border-white cursor-pointer" id="x"
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-x"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></svg
+        ></a
+      >
+    </div>
+    <div>
+      <div class="flex justify-between gap-6 mt-3 p-5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-x bg-red-600 rounded-3xl"
+          width="34"
+          height="34"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></svg
+        >
+        <p class="text-center">
+          la pagina no se ha encontrado <br /> o nunca existio
+        </p>
+      </div>
+      <div class="flex justify-center p-4">
+        <a href="/" class="bg-sky-600 rounded-lg p-2 px-11 hover:bg-sky-900"
+          >Aceptar</a
+        >
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="meme" class="hidden">
+  <div class="flex z-10 justify-center mt-20">
+    <img
+      src="https://img2.storyblok.com/0x0/filters:quality(90):format(webp)/f/140924/600x600/aad00e5081/404.jpg"
+      width="450"
+      height="450"
+      class="absolute top-20"
+    />
+    <a
+      class="text-white border rounded-3xl py-2 px-7 z-10 mt-[27rem] bg-black text-2xl hover:text-white hover:bg-[#e55139]"
+      href="/">BACK TO HOME</a
+    >
+  </div>
+</div>
+
+<script>
+  const ventana = document.getElementById("ventana");
+  const meme = document.getElementById("meme");
+  const x = document.getElementById("x");
+  x.addEventListener("click", () => {
+    ventana.classList.toggle("hidden");
+    meme.classList.toggle("hidden");
+  });
+
+  const move = document.getElementById("divmove");
+
+  move.onmousedown = function (event) {
+    let shiftX = event.clientX - move.getBoundingClientRect().left;
+    let shiftY = event.clientY - move.getBoundingClientRect().top;
+
+    move.style.position = "absolute";
+    move.style.zIndex = "5";
+
+    moveAt(event.pageX, event.pageY);
+
+    // mueve la pelota a las coordenadas (pageX, pageY)
+    // tomando la posición inicial en cuenta
+    function moveAt(pageX, pageY) {
+      move.style.left = pageX - shiftX + "px";
+      move.style.top = pageY - shiftY + "px";
+    }
+
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
+
+    // mueve la pelota con mousemove
+    document.addEventListener("mousemove", onMouseMove);
+
+    // suelta la pelota, elimina el manejador innecesario
+    move.onmouseup = function () {
+      document.removeEventListener("mousemove", onMouseMove);
+      move.onmouseup = null;
+    };
+  };
+
+  move.ondragstart = function () {
+    return false;
+  };
+</script>

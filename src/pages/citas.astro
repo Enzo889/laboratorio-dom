@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Citas Aleatorias">
+  <section class="flex justify-center mt-36">
+    <div
+      class="max-w-full max-h-full flex text-center items-center justify-center"
+    >
+      <div
+        class="flex flex-col justify-center bg-[rgba(255,255,255,.08)] text-white rounded-3xl gap-5"
+      >
+        <h1 class="p-6 text-3xl font-bold">Citas Motivacionales</h1>
+        <div class="px-6 py-8 flex flex-col gap-6">
+          <p class="text-xl" id="cita"></p>
+          <p class="font-light" id="autor"></p>
+        </div>
+        <div class="flex justify-center mb-5">
+          <button
+            id="nextCita"
+            class="p-3 w-5/6 backdrop-blur-lg bg-[rgba(255,255,255,.08)] border-solid border-[rgba(255,255,255,.08)] border rounded-3xl hover:border-white"
+            >Siguiente Cita</button
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { citaFull } from "../components/cit.js";
+
+    const botonCita = document.getElementById("nextCita");
+    const texto = document.getElementById("cita");
+    const autor = document.getElementById("autor");
+
+    let ultimoNumero;
+
+    function generarNumeroAleatorio(min, max) {
+      let numero;
+      do {
+        numero = Math.floor(Math.random() * (max - min) + min);
+      } while (numero === ultimoNumero);
+      ultimoNumero = numero;
+      return numero;
+    }
+
+    function cambiarCita() {
+      const index = generarNumeroAleatorio(0, citaFull.length);
+      texto.textContent = `"${citaFull[index].texto}."`;
+      autor.textContent = citaFull[index].autor;
+    }
+
+    // Establece la primera cita al cargar la página
+    cambiarCita();
+
+    botonCita.addEventListener("click", cambiarCita);
+  </script>
+</Layout>

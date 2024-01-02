@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Colores Aleatorios">
+  <main class="mt-56 flex justify-center items-center text-white">
+    <div
+      class="bg-[rgba(255,255,255,.08)] w-1/4 h-1/4 flex flex-col justify-center items-center gap-5 p-8 rounded-md border-2 border-[rgba(255,255,255,.08)]"
+    >
+      <div class="flex justify-between gap-3">
+        <p class="change-text text-2xl">#0f0f0f</p>
+        <button
+          class="clipboard cursor-pointer hover:scale-110 active:scale-110 active:transition-none transition active:text-red-600"
+          title="Toca para copiar el codigo."
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-copy"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+              d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
+            ></path><path
+              d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
+            ></path></svg
+          >
+        </button>
+      </div>
+      <button
+        class="change border border-[rgba(255,255,255,.08)] bg-[rgba(255,255,255,.08)] p-5 rounded-xl text-2xl hover:opacity-75"
+        >Generar Color</button
+      >
+    </div>
+  </main>
+
+  <script>
+    function generarBg() {
+      let caracter = "0123456789ABCDEF";
+      let colorHex = "#";
+
+      for (let i = 0; i < 6; i++) {
+        let indiceRandom = Math.floor(Math.random() * 16);
+        colorHex += caracter[indiceRandom];
+      }
+      return colorHex;
+    }
+
+    function changeBgColor() {
+      let colorRandom = generarBg();
+      textColor.textContent = colorRandom;
+      document.documentElement.style.backgroundColor = colorRandom;
+    }
+
+    const textColor = document.querySelector(".change-text");
+    const button = document.querySelector(".change");
+    const copy = document.querySelector(".clipboard");
+
+    copy.addEventListener("click", () => {
+      navigator.clipboard.writeText(textColor.textContent);
+    });
+
+    button.addEventListener("click", changeBgColor);
+  </script>
+</Layout>

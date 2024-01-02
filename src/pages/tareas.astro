@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Tareas Pendientes">
+  <main
+    class="text-white p-3 bg-[rgba(255,255,255,.08)] flex flex-col flex-wrap justify-center items-center mt-40 mx-auto w-1/2 rounded-3xl gap-5 mb-10"
+  >
+    <h1 class="text-3xl font-black">Mis Tareas</h1>
+    <input
+      class="text-black text-center rounded-full h-12 overflow-auto"
+      id="ingresar"
+      placeholder="Ingresa una tarea"
+    />
+    <button
+      class="backdrop-blur-lg bg-[rgba(255,255,255,.08)] border-solid border-[rgba(255,255,255,.08)] border rounded-3xl p-3 gap-2 hover:border-white"
+      id="boton-de-tareas"
+      type="submit">Crear Tarea</button
+    >
+    <div class="flex flex-col gap-2 w-full h-full overflow-auto" id="lista">
+      <hr />
+    </div>
+  </main>
+
+  <div class="h-1"></div>
+
+  <script>
+    const input = document.getElementById("ingresar") as HTMLInputElement;
+    const boton = document.getElementById(
+      "boton-de-tareas"
+    ) as HTMLButtonElement;
+    const lista = document.getElementById("lista");
+
+    function agregarTareas() {
+      if (input.value) {
+        let tareaNueva = document.createElement("div");
+        tareaNueva.classList.add(
+          "flex",
+          "justify-between",
+          "p-5",
+          "text-xl",
+          "overflow-auto"
+        );
+
+        let texto = document.createElement("p");
+        texto.textContent = input.value;
+        texto.classList.add("overflow-auto", "mr-4");
+        tareaNueva.appendChild(texto);
+
+        let iconos = document.createElement("div");
+        iconos.classList.add("w-[10%]", "flex", "justify-between");
+        tareaNueva.appendChild(iconos);
+
+        let completar = document.createElement("div");
+        completar.classList.add("cursor-pointer");
+        completar.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>`;
+
+        let clicks = false;
+
+        completar.addEventListener("click", (event) => {
+          let target = event.target as HTMLElement;
+
+          let tarea = target.parentNode.parentNode.parentNode as HTMLElement;
+
+          if (!clicks) {
+            tarea.classList.add(
+              "line-through",
+              "bg-[#22c55e]",
+              "text-black",
+              "rounded-xl"
+            );
+            clicks = true;
+          } else {
+            tarea.classList.remove(
+              "line-through",
+              "bg-[#22c55e]",
+              "text-black",
+              "rounded-xl"
+            );
+            clicks = false;
+          }
+        });
+        let eliminar = document.createElement("div");
+        eliminar.classList.add("cursor-pointer");
+        eliminar.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>`;
+
+        eliminar.addEventListener("click", () => {
+          tareaNueva.remove();
+        });
+
+        iconos.append(completar, eliminar);
+
+        lista.appendChild(tareaNueva);
+      } else {
+        alert("por favor ingresa una tarea");
+      }
+    }
+
+    boton.addEventListener("click", agregarTareas);
+
+    input.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        // Llamar a la función que quieres ejecutar
+        agregarTareas();
+        input.value = "";
+      }
+    });
+  </script>
+</Layout>

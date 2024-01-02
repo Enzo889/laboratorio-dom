@@ -1,0 +1,19 @@
+<div id="top" class="flex justify-center">
+  <div
+    class="w-9/12 h-1/2 border border-solid border-[rgba(255,255,255,.08)] rounded-3xl p-5 text-white bg-[#1d1c20] cursor-pointer"
+  >
+    <p
+      class="text-center font-bold text-7xl uppercase bg-gradient-to-r from-rose-600 to-violet-900 bg-clip-text text-transparent"
+    >
+      Volver Arriba
+    </p>
+  </div>
+</div>
+
+<script>
+  let top = document.querySelector("#top");
+  top.addEventListener("click", function () {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+</script>

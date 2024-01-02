@@ -1,0 +1,138 @@
+<!-- sdada -->
+<div
+  id="secret"
+  class="hidden bg-[url(https://m.media-amazon.com/images/M/MV5BYmExMzljMDUtMmIyOS00ZWMwLWIwNzAtYjAyMjRmMTI3ZDU4XkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg)] fixed w-[100vw] h-screen top-0 left-0 bg-black selection:bg-amber-400 z-20"
+>
+  <div class="h-full w-full flex flex-col justify-center
+  items-center gap-8">
+    <h1
+      class="text-8xl text-center font-mono uppercase text-amber-400 selection:bg-amber-400 selection:text-white"
+    >
+      has encontrado <br /> la seccion secreta. Felicitaciones!!!
+    </h1>
+    <button
+      class="bg-amber-400 rounded-3xl hover:animate-bounce p-5 text-5xl text-white uppercase cursor-pointer"
+      id="btn2"
+    >
+      Toca para Volver
+    </button>
+  </div>
+</div>
+<!-- sdasdsa -->
+<main
+  id="mensaje"
+  class="hidden z-20 fixed w-[100vw] h-screen top-0 left-0 bg-black selection:bg-amber-400"
+>
+  <iframe
+    src="https://player.vimeo.com/video/674104097?background=1"
+    class="z-10 absolute top-0 left-0 w-full h-full overflow-clip"
+    allowfullscreen
+    frameborder="0"
+    allow="autoplay"
+  >
+  </iframe>
+  <div
+    class="h-full w-full flex flex-col justify-center
+  items-center gap-8 z-20"
+  >
+    <h1 class="text-9xl text-center uppercase text-white z-20 flex">
+      Por favor, <br /> no dejes la pagina!!!
+    </h1>
+    <p class="text-white z-20">
+      (Vuelve por favor!! te apuesto a que todavia no has encontrado la seccion
+      escondida.)
+    </p>
+    <h2
+      class="z-30 bg-amber-400 rounded-3xl p-5 text-5xl text-white uppercase cursor-pointer"
+      id="btn"
+      style="
+        animation: tilt-shaking 0.5s infinite;
+        transform-origin: center;
+      "
+    >
+      ok, tranquilo no lo hare.
+    </h2>
+  </div>
+</main>
+
+<script>
+  const secret = document.getElementById("secret");
+  const secretbtn = document.getElementById("btn2");
+
+  let input = "";
+
+  document.addEventListener("keydown", (e) => {
+    if (
+      (e.key === "d" && input === "") ||
+      (e.key === "o" && input === "d") ||
+      (e.key === "m" && input === "do")
+    ) {
+      input += e.key;
+    } else {
+      input = "";
+    }
+
+    if (input === "dom") {
+      secret.classList.remove("hidden");
+      document.documentElement.style.overflowY = "hidden";
+
+      secretbtn.addEventListener("click", () => {
+        secret.classList.add("hidden");
+        document.documentElement.style.overflowY = "auto";
+        input = "";
+      });
+    }
+  });
+
+  // mensaje de salida
+  let btn = document.querySelector("#btn");
+  let main = document.querySelector("#mensaje");
+  let isPageVisible = true;
+
+  // Función que se ejecuta cuando la página se vuelve visible
+  function handleVisibilityChange() {
+    isPageVisible = !document.hidden;
+    if (!isPageVisible) {
+      setTimeout(() => showMessage(), 5000);
+    }
+  }
+
+  // Función para mostrar el mensaje
+  function showMessage() {
+    if (!isPageVisible) {
+      main.classList.remove("hidden");
+      document.documentElement.style.overflowY = "hidden";
+
+      btn.addEventListener("click", () => {
+        main.classList.add("hidden");
+        document.documentElement.style.overflowY = "auto";
+      });
+    }
+  }
+
+  // Agregar un event listener para el evento visibilitychange
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+
+  // También ejecutamos handleVisibilityChange cuando se carga la página para verificar el estado inicial
+  handleVisibilityChange();
+</script>
+
+<style>
+  @keyframes tilt-shaking {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(5px, 5px) rotate(5deg);
+    }
+    50% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    75% {
+      transform: translate(-5px, 5px) rotate(-5deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+</style>

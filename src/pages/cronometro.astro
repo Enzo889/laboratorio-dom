@@ -1,0 +1,111 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Cronometro">
+  <main class="flex justify-center mt-48 text-white w-auto h-auto">
+    <div
+      class="bg-[rgba(255,255,255,.08)] border-solid border-[rgba(255,255,255,.08)] border rounded-3xl p-14 gap-8 flex flex-col"
+    >
+      <div id="cronometro" class="font-semibold text-8xl">00:00:00</div>
+      <div class="flex justify-around">
+        <button class="hover:opacity-50" id="inicio-pausa"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-player-play-filled"
+            width="54"
+            height="54"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+              d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z"
+              stroke-width="0"
+              fill="currentColor"></path></svg
+          ></button
+        >
+        <button class="hover:opacity-50" id="reiniciar"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-refresh"
+            width="54"
+            height="54"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+              d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path><path
+              d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path></svg
+          ></button
+        >
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cronometro = document.getElementById("cronometro");
+    const botonInicioPausa = document.getElementById("inicio-pausa");
+    const botonReiniciar = document.getElementById("reiniciar");
+
+    let [horas, segundos, minutos] = [0, 0, 0];
+
+    let intervaloTiempo;
+    let estadoCronometro = "pausado";
+
+    function actualizarCronometro() {
+      segundos++;
+
+      if (segundos / 60 === 1) {
+        segundos = 0;
+        minutos++;
+        if (minutos / 60 === 1) {
+          minutos = 0;
+          horas++;
+        }
+      }
+
+      const segundosConFormato = asignarFormatos(segundos);
+      const minutosConFormato = asignarFormatos(minutos);
+      const horasConFormato = asignarFormatos(horas);
+
+      cronometro.textContent = `${horasConFormato}:${minutosConFormato}:${segundosConFormato}`;
+      document.title = `${horasConFormato}:${minutosConFormato}:${segundosConFormato}`;
+    }
+
+    function asignarFormatos(unidadDeTiempo) {
+      return unidadDeTiempo < 10 ? "0" + unidadDeTiempo : unidadDeTiempo;
+    }
+
+    botonInicioPausa.addEventListener("click", () => {
+      if (estadoCronometro === "pausado") {
+        botonInicioPausa.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause-filled" width="54" height="54" title="Pause" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /></svg>`;
+
+        intervaloTiempo = window.setInterval(actualizarCronometro, 1000);
+        estadoCronometro = "funcionando";
+      } else {
+        botonInicioPausa.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play-filled" width="54" height="54" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" stroke-width="0" fill="currentColor"></path></svg>`;
+
+        window.clearInterval(intervaloTiempo);
+        estadoCronometro = "pausado";
+      }
+    });
+
+    botonReiniciar.addEventListener("click", () => {
+      window.clearInterval(intervaloTiempo);
+      horas = 0;
+      minutos = 0;
+      segundos = 0;
+
+      cronometro.textContent = "00:00:00";
+
+      botonInicioPausa.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play-filled" width="54" height="54" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" stroke-width="0" fill="currentColor"></path></svg>`;
+      estadoCronometro = "pausado";
+    });
+  </script>
+</Layout>

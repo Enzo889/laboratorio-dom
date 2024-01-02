@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Colores RGB con Sliders">
+  <main class="flex justify-center items-center text-center mt-44">
+    <div
+      class="flex flex-col gap-7 max-w-xl h-2/4 flex-wrap p-10 justify-center items-center bg-[rgba(255,255,255,.08)] text-white rounded-3xl"
+    >
+      <div class="flex flex-col">
+        <label for="rojo">Rojo (R)</label>
+        <input id="rojo" type="range" min="0" max="255" value="15" step="1" />
+        <p id="texto-rojo"></p>
+      </div>
+      <div class="flex flex-col">
+        <label for="verde">Verde (G)</label>
+        <input id="verde" type="range" min="0" max="255" value="15" step="1" />
+        <p id="texto-verde"></p>
+      </div>
+      <div class="flex flex-col">
+        <label for="azul">Azul (B)</label>
+        <input id="azul" type="range" min="0" max="255" value="15" step="1" />
+        <p id="texto-azul"></p>
+      </div>
+    </div>
+    <div
+      class="ml-16 flex flex-col gap-7 max-w-xl h-2/4 flex-wrap p-10 justify-center items-center bg-[rgba(255,255,255,.08)] text-white rounded-3xl"
+    >
+      <p id="rgb-code"></p>
+      <button
+        id="copiar-boton"
+        class="flex justify-center text-white backdrop-blur-lg bg-[rgba(255,255,255,.08)] border-solid border-[rgba(255,255,255,.08)] border rounded-3xl p-3 gap-2 hover:border-white"
+        >Copiar Código</button
+      >
+    </div>
+  </main>
+
+  <script>
+    const inputRojo = document.getElementById("rojo");
+    const inputVerde = document.getElementById("verde");
+    const inputAzul = document.getElementById("azul");
+
+    const textoRojo = document.getElementById("texto-rojo");
+    const textoVerde = document.getElementById("texto-verde");
+    const textoAzul = document.getElementById("texto-azul");
+
+    let { rojo, verde, azul } = { rojo: 15, verde: 15, azul: 15 };
+
+    textoRojo.innerText = String(rojo);
+    textoVerde.innerText = String(verde);
+    textoAzul.innerText = String(azul);
+
+    const rgbCode = document.getElementById("rgb-code");
+
+    function actualizarColor(rojo, verde, azul) {
+      const colorRGB = `rgb(${rojo}, ${verde}, ${azul})`;
+      document.documentElement.style.backgroundColor = colorRGB;
+
+      // Actualizar el código RGB
+      rgbCode.innerText = colorRGB;
+    }
+
+    // Función para actualizar los valores y el color cuando cambia un slider
+    function actualizarSlider(e) {
+      if (e.target.id === "rojo") {
+        rojo = e.target.value;
+        textoRojo.innerText = String(rojo);
+      } else if (e.target.id === "verde") {
+        verde = e.target.value;
+        textoVerde.innerText = String(verde);
+      } else if (e.target.id === "azul") {
+        azul = e.target.value;
+        textoAzul.innerText = String(azul);
+      }
+
+      actualizarColor(rojo, verde, azul);
+    }
+
+    const copiarBoton = document.getElementById("copiar-boton");
+
+    function copiarCodigo() {
+      const codigoCopiado = rgbCode.innerText;
+      navigator.clipboard.writeText(codigoCopiado);
+
+      // Cambiar el texto del botón después de copiar
+      copiarBoton.innerText = "¡Código Copiado!";
+      setTimeout(() => {
+        copiarBoton.innerText = "Copiar Código";
+      }, 2000); // Restaurar el texto del botón después de 2 segundos
+    }
+
+    // Agregar listeners a los sliders
+    inputRojo.addEventListener("change", actualizarSlider);
+    inputVerde.addEventListener("change", actualizarSlider);
+    inputAzul.addEventListener("change", actualizarSlider);
+
+    // Inicializar el código RGB
+    rgbCode.innerText = `rgb(${rojo}, ${verde}, ${azul})`;
+    copiarBoton.addEventListener("click", copiarCodigo);
+  </script>
+</Layout>

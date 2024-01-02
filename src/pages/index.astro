@@ -1,0 +1,139 @@
+---
+import Card from "../components/Card.astro";
+import Layout from "../layouts/Layout.astro";
+import Socialmedia from "../components/Socialmedia.astro";
+import Backtop from "../components/Backtop.astro";
+import Thanks from "../components/Thanks.astro";
+---
+
+<Layout title="Inicio">
+  <main class="selection:text-black selection:bg-white h-full font-[Inter]">
+    <h1
+      class="mt-52 text-8xl bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent font-bold text-center"
+    >
+      Mi Laboratorio del DOM
+    </h1>
+    <p class="text-gray-300 text-center text-base font-medium mt-12">
+      El DOM es como el alma de una página web, <br /> y aprender a controlarlo
+      es como descubrir la magia detrás de la interactividad en línea.
+    </p>
+
+    <a
+      href="/history"
+      class="flex justify-center w-1/5 mx-auto font-medium mt-12 text-white backdrop-blur-lg bg-[rgba(255,255,255,.08)] border-solid border-[rgba(255,255,255,.08)] border rounded-3xl p-3 gap-2 hover:border-white"
+      >Mi Historia con el DOM <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-jetpack"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M10 6a3 3 0 1 0 -6 0v7h6v-7z"></path>
+        <path d="M14 13h6v-7a3 3 0 0 0 -6 0v7z"></path>
+        <path d="M5 16c0 2.333 .667 4 2 5c1.333 -1 2 -2.667 2 -5"></path>
+        <path d="M15 16c0 2.333 .667 4 2 5c1.333 -1 2 -2.667 2 -5"></path>
+        <path d="M10 8h4"></path>
+        <path d="M10 11h4"></path>
+      </svg></a
+    >
+
+    <img
+      src="https://freepngimg.com/thumb/space/24361-1-space-planet-image.png"
+      alt=""
+      class="imag absolute -left-96 top-24 -z-10"
+    />
+
+    <img
+      src="https://freepngimg.com/thumb/space/24553-1-space-planet.png"
+      alt=""
+      class="imag absolute -right-96 top-full -z-10"
+    />
+    <img
+      src="https://freepngimg.com/thumb/space/3-2-space-transparent.png"
+      alt=""
+      class="imag absolute -left-96 top-[1200px] -z-10"
+    />
+    <img
+      src="https://freepngimg.com/thumb/universe/29952-6-black-hole-photos.png"
+      alt=""
+      class="imag absolute right-1/4 top-[2590px] -z-10"
+    />
+
+    <div class="mt-72 text-6xl flex justify-center gap-4">
+      <h2 class="text-white font-bold">Esto es lo que</h2>
+      <p
+        class="uppercase bg-gradient-to-r from-white to-orange-600 bg-clip-text text-transparent font-bold"
+      >
+        aprendi
+      </p>
+    </div>
+    <div
+      class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 mt-24 mx-16"
+    >
+      <Card
+        href="/hexColor"
+        title="Colores Aleatorios"
+        desciption="Generación de colores aleatorios utilizando códigos hexadecimales."
+      />
+      <Card
+        href="/sliders"
+        title="Colores RGB con Sliders"
+        desciption="Selección de colores RGB a través de controles deslizantes."
+        img="src/assets/RGB.png"
+      />
+      <Card
+        href="/citas"
+        title="Citas Aleatorias"
+        desciption="Visualización de citas aleatorias o frases inspiradoras."
+        img="src/assets/citas.png"
+      />
+      <Card
+        href="/cronometro"
+        title="Cronometro"
+        desciption="Funcionalidad de cronómetro para medir el tiempo."
+        img="src/assets/cronometro.png"
+      />
+      <Card
+        href="/tareas"
+        title="Tareas Pendientes"
+        desciption="Gestión de tareas pendientes o lista de quehaceres."
+        img="src/assets/tareas.png"
+      />
+    </div>
+    <Thanks />
+    <div class="my-[35px]">
+      <Backtop />
+    </div>
+    <div class="pb-10">
+      <Socialmedia />
+    </div>
+  </main>
+
+  <script>
+    import { gsap } from "gsap";
+
+    document.addEventListener("mousemove", function (e) {
+      let normX = e.clientX / window.innerWidth - 0.5;
+      let normY = e.clientX / window.innerHeight - 0.5;
+
+      let moveX = normX * 100;
+      let moveY = normY * 50;
+
+      let rotateZ = normX * 25;
+
+      gsap.to(".imag", {
+        x: moveX,
+        y: moveY,
+        rotationZ: rotateZ,
+        ease: "power2.out",
+        duration: 1.5,
+      });
+    });
+  </script>
+</Layout>
